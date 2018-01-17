@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>CloudSample</title>
 </head>
 <body>
 <p id="demo"></p>
@@ -15,7 +15,8 @@ xhttp.onreadystatechange = function() {
        document.getElementById("demo").innerHTML = xhttp.responseText;
     }
 };
-xhttp.open("GET", "rest/PostService/restGet", true);
+var url = window.location.href ;
+xhttp.open("GET", "rest/PostService/restGet?user_id="+url, true);
 xhttp.send();
 
 </script>
