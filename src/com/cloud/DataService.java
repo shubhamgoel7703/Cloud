@@ -26,8 +26,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Path("/PostService")
 public class DataService 
 {
+	public static String CurrentTemperature="23 °C";
 	
-	 @GET
+	   @GET
 	   @Path("/restGet")
 	   @Produces(MediaType.APPLICATION_JSON)
 	   public String getUsers(@QueryParam("user_id") String name){
@@ -35,9 +36,9 @@ public class DataService
 		   System.out.println("coming in java");
 		   System.out.println(name);
 		   
-		   HttpRequest(name);
+		 //  HttpRequest(name);
 		   
-	      return "Shubham";//userDao.getAllUsers();
+	      return CurrentTemperature;//userDao.getAllUsers();
 	   }
 	   
 	   
@@ -49,7 +50,7 @@ public class DataService
 		   
 		   System.out.println(data);
 		   System.out.println("coming in post");
-		   
+		   CurrentTemperature=data;
 		
 	   }
 	 

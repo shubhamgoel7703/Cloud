@@ -4,21 +4,67 @@
 <meta charset="ISO-8859-1">
 <title>CloudSample</title>
 </head>
-<body>
-<p id="demo"></p>
-<script type="text/javascript">
-console.log("script");
-var xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-       // Typical action to be performed when the document is ready:
-       document.getElementById("demo").innerHTML = xhttp.responseText;
-    }
-};
-var url = window.location.href ;
-xhttp.open("GET", "rest/PostService/restGet?user_id="+url, true);
-xhttp.send();
+<body onload="getDataFromAppBackend()">
+<h1>Data on Cloud Application</h1>
+Current Room Temperature is (Values coming from sensor) :
+<p id="temp"></p>
 
+Current AC Status :<p id="acStatus" >on</p> <input onclick="acToggle()" type="button" value="Change">
+<br><br>
+<button onclick="getDataFromAppBackend()">Refresh Page</button>
+
+<br><br>
+<h1>Raspberry pi post</h1>
+Test Posting: <input id="postInput">
+<button onclick="postDataToAppBackend()" value="20">Post</button>
+
+<br><br>
+Current AC Status :<p id="acStatusRaspSide" >on</p>
+
+<script type="text/javascript">
+function acToggle()
+{
+	if(document.getElementById("acStatus").innerHTML=="on")
+		{
+		document.getElementById("acStatus").innerHTML = "off";
+		document.getElementById("acStatusRaspSide").innerHTML = "off";
+		}
+	
+	else
+		{
+		document.getElementById("acStatus").innerHTML="on"
+			document.getElementById("acStatusRaspSide").innerHTML="on"
+		}
+}
+
+function postDataToAppBackend()
+{
+	console.log("in post data function");
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	       // Typical action to be performed when the document is ready:
+	     //  document.getElementById("demo").innerHTML = xhttp.responseText;
+	    }
+	};
+	xhttp.open("POST", "rest/PostService/restPost");
+	xhttp.send(document.getElementById("postInput").value+" °C");
+}
+
+function getDataFromAppBackend()
+{
+	console.log("in get data function");
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	       // Typical action to be performed when the document is ready:
+	       document.getElementById("temp").innerHTML = xhttp.responseText;
+	    }
+	};
+	var url = window.location.href ;
+	xhttp.open("GET", "rest/PostService/restGet?user_id="+url, true);
+	xhttp.send();
+}
 </script>
 </body>
 </html>
